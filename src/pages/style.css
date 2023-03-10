@@ -1,0 +1,46 @@
+.content-container{
+        display: flex;
+        flex: 1;
+        width: 100%;
+}
+
+.image-container{
+        flex-direction: row;
+        flex-wrap: wrap;
+}
+.center-center{
+        justify-content: center;
+        align-items: center;
+}
+.form{
+  
+                display: flex;
+                flex: 1;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                padding:20px;
+                border-width: 1px;
+                border-color: #00000040;
+                border-style: solid;
+                margin: 10px;
+
+}
+.black-white{
+        filter: grayscale(5);
+}
+.black-white:hover{
+        filter: grayscale(0);
+}
+.fade-in{
+        animation-name: fade-in;
+        animation-duration: 3s;
+}
+
+@keyframes fade-in {
+        from {opacity:0;scale: 3;
+        }
+        to {opacity: 1;
+                scale: 1;
+        }
+      }

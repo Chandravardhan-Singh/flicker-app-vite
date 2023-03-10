@@ -1,0 +1,17 @@
+.button{
+    border-width: 0;
+    padding:5px 10px;
+    font-size: 16px;
+    padding: 8px 24px;
+    margin: 5px;
+    background-color: #171717;
+    color:#fff;
+    border-radius: 5px;
+    width: 270px;
+    display: block;
+    align-self: center;
+    margin: 10px 0px;
+}
+.button:hover{
+    background-color: #17171790;
+}
