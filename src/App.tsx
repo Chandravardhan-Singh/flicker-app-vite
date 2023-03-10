@@ -7,7 +7,6 @@ import { createTheme } from "@mui/material";
 import { themeOptions } from "./theme";
 function App() {
   const theme = createTheme(themeOptions);
-
   return (
     <ThemeProvider theme={theme}>
       <AppRoutes />
