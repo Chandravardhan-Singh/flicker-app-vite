@@ -19,35 +19,41 @@ export interface IUser {
 interface AuthState {
   user?: IUser | null;
   isAuthenticated: boolean;
-  rememberMe: boolean;
+  rememberMe: boolean
 }
-
-const initialState: AuthState = {
-  user: {},
+const user  = JSON.parse(localStorage.getItem("userData")!)
+const initialState: AuthState = user?{
+  user,
+  isAuthenticated: true,
+  rememberMe: JSON.parse(localStorage.getItem("rememberMe")!).rememberMe || false
+}:{
+  user: null,
   isAuthenticated: false,
-  rememberMe: false,
+  rememberMe:false
 };
 
 export const authSlice = createSlice({
   name: "authSlice",
-  initialState,
+  initialState:(()=>{ console.log("initialSet"); return initialState})(),
   reducers: {
     // ? Logout the user by returning the initial state
     login: (state, action: PayloadAction<IUser & { rememberMe: boolean }>) => {
       const { email, password } = action.payload;
-      if (!!email && !!password) {
+      if (!email || !password) {
+        return
+      }
         if (action.payload.rememberMe) {
           localStorage.setItem("userData", JSON.stringify({ email, password }));
+          localStorage.setItem("rememberMe",  JSON.stringify(action.payload.rememberMe));
         }
-        console.log(action.payload);
-        state.user = action.payload;
+        state.user = {email:action.payload.email, password:action.payload.password};
         state.isAuthenticated = true;
-      }
     },
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
       localStorage.removeItem("userData");
+      localStorage.removeItem("rememberMe");
     },
     // Save the user's info
     userInfo: (state, action: PayloadAction<AuthState>) => {
@@ -56,23 +62,10 @@ export const authSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.user = action.payload.user;
-    },
-    authenticate: (state) => {
-      const userDataString = localStorage.getItem("userData");
-
-      if (!!userDataString) {
-        const userData = JSON.parse(localStorage.getItem("userData") ?? "");
-
-        if (!!userData && userData?.email && userData?.password) {
-          state.isAuthenticated = true;
-          state.user.email = userData?.email;
-          state.user.password = userData?.password;
-        }
-      }
-    },
+    }
   },
 });
 
-export const { login, logout, userInfo, authenticate } = authSlice.actions;
+export const { login, logout, userInfo } = authSlice.actions;
 // ? Export the authSlice.reducer to be included in the store.
 export default authSlice.reducer;
