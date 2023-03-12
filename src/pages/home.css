@@ -1,0 +1,234 @@
+/* Common */
+div.main {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.home-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex: 1;
+}
+
+.vignette {
+    box-shadow: 20px 20px 80px 40px #00000050 inset;
+}
+
+.image-container {
+    background-color: #000;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container>img {
+    width: 65%;
+    height: auto;
+}
+
+.content-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #000;
+}
+
+.details-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+/* Navigation */
+nav.navigation {
+    position: fixed;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 100000;
+}
+
+nav.navigation>ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+nav.navigation>ul>li {
+    margin: auto 10px;
+}
+
+.logo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    margin: auto 10px;
+    color: #000;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.nav-link {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    margin: auto 10px;
+    color: #000;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #FF9419;
+}
+
+/* typography */
+.text-link {
+    color: #000000;
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.text-link:hover {
+    color: #FF9419;
+    text-decoration: underline;
+}
+
+/* wall-of-fame */
+#wall-of-fame {
+    background-color: #f0f0f0;
+}
+
+.card-image {
+    width: auto;
+    height: 90%;
+    margin: 6px;
+    border-radius: 6px;
+    filter: grayscale(1);
+}
+
+.motion-div {
+    height: 200px;
+    width: 80%;
+    background-color: #000;
+    border-radius: 8px;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+.motion-div:hover>.card-image {
+    filter: grayscale(0);
+}
+
+.motion-div:hover>*>.title {
+    color: #FF9419;
+}
+
+
+.text-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    padding: 8px;
+}
+
+.text-container>.title,
+.text-container>.description {
+    color: #f7f7f7;
+    letter-spacing: 1px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 22px;
+}
+
+.text-container>.description {
+    font-size: 14px;
+    margin: 0;
+}
+
+
+/* clients */
+#clients {
+    /* background-color: #f00; */
+    flex-direction: column;
+}
+
+.motion-div-client {
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    align-self: center;
+    padding: 10px;
+    margin-bottom: 80px;
+}
+
+.client {
+    text-align: center;
+    color: #000;
+    letter-spacing: 1px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 32px;
+    align-self: flex-end;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+.client:hover {
+    text-shadow: 5px 5px #FF9419;
+}
+
+/* about */
+#about {
+    background-color: #f7f7f7;
+    background-image: url("https://images.pexels.com/photos/6474529/pexels-photo-6474529.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex-direction: column;
+}
+
+/* footer */
+#footer {
+    min-height: 50vh !important;
+    background-color: #000;
+    background-image: url("https://images.pexels.com/photos/3473569/pexels-photo-3473569.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.email-subscribe {
+    width: 100%;
+    height: 40px;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-bottom-color: #fff;
+    border-bottom-style: solid;
+    background-color: transparent;
+    color: #fff;
+    font-size: 22px;
+    outline: 0px;
+}
+
+.list-item {
+    color: #fff;
+    font-size: 24px;
+}

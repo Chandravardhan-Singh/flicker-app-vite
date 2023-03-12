@@ -1,3 +1,4 @@
+
 .content-container{
         display: flex;
         flex: 1;
@@ -36,6 +37,8 @@
         animation-name: fade-in;
         animation-duration: 3s;
 }
+
+
 
 @keyframes fade-in {
         from {opacity:0;scale: 3;
