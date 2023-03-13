@@ -10,7 +10,9 @@ import {
   FormControlLabel,
   Grid,
   TextField,
+  Typography,
 } from "@mui/material";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
 import { RoutePaths } from "../../routes/route-path.enum";
@@ -21,26 +23,42 @@ const marginTop = {
   marginTop: 15,
 };
 
+type Inputs = {
+  email: string;
+  password: string;
+};
+
 export const Login = (props: Props) => {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAppSelector((state) => state.authUser);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    control,
+  } = useForm<Inputs>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const onLoginPressed = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const onLoginPressed: SubmitHandler<Inputs> = (data) => {
     dispatch(
       login({
-        email,
-        password,
+        email: data.email,
+        password: data.password,
         rememberMe,
       })
     );
     navigate(RoutePaths.Root);
+  };
+
+  const navigateToSignUp = () => {
+    navigate(RoutePaths.Signup);
   };
 
   return (
@@ -80,33 +98,57 @@ export const Login = (props: Props) => {
         <Grid item xs={12} lg={6}>
           <div className="login-form">
             <Box>
-              <form>
-                <TextField
-                  fullWidth
-                  id="standard-basic"
-                  variant="standard"
-                  label="Email"
-                  type="email"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
+              <form onSubmit={handleSubmit(onLoginPressed)}>
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: true,
                   }}
-                  placeholder="Enter Email"
-                  value={email}
-                  style={marginTop}
+                  render={({ field }) => (
+                    <TextField
+                      fullWidth
+                      id="standard-basic"
+                      variant="standard"
+                      label="Email"
+                      type="email"
+                      placeholder="Enter Email"
+                      style={marginTop}
+                      error={!!errors.email?.type}
+                      {...field}
+                    />
+                  )}
                 />
-                <TextField
-                  fullWidth
-                  id="standard-basic"
-                  variant="standard"
-                  type="password"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
+                {!!errors.email?.type && (
+                  <Typography variant="caption" component={"p"}>
+                    {errors.email?.message || "Email is required"}
+                  </Typography>
+                )}
+                <Controller
+                  name="password"
+                  control={control}
+                  rules={{
+                    required: true,
                   }}
-                  value={password}
-                  placeholder="Enter Password"
-                  label="Password"
-                  style={marginTop}
+                  render={({ field }) => (
+                    <TextField
+                      fullWidth
+                      id="standard-basic"
+                      variant="standard"
+                      type="password"
+                      placeholder="Enter Password"
+                      label="Password"
+                      style={marginTop}
+                      error={!!errors.password?.type}
+                      {...field}
+                    />
+                  )}
                 />
+                {!!errors.password?.type && (
+                  <Typography variant="caption" component={"p"}>
+                    {errors.password?.message || "Password is required"}
+                  </Typography>
+                )}
                 <FormControlLabel
                   style={marginTop}
                   label="Remember Me"
@@ -124,20 +166,22 @@ export const Login = (props: Props) => {
 
                 <Button
                   variant="contained"
-                  onClick={onLoginPressed}
                   fullWidth
                   style={marginTop}
+                  type="submit"
                 >
                   Login
                 </Button>
-                {/* <Button
-              variant="outlined"
-              style={marginTop}
-              onClick={onLoginPressed}
-              fullWidth
-            >
-              Sign Up
-            </Button> */}
+                <Button
+                  type="button"
+                  variant="text"
+                  style={marginTop}
+                  fullWidth
+                  color="secondary"
+                  onClick={navigateToSignUp}
+                >
+                  Sign Up
+                </Button>
               </form>
             </Box>
           </div>
