@@ -16,9 +16,9 @@ export const flickerAPI = createApi({
   }),
   tagTypes: ["Image"],
   endpoints: (builder) => ({
-    searchImage: builder.query<IResponse, string>({
-      query: (tags) =>
-        `/?method=flickr.photos.search&api_key=${API_KEY}&format=json&nojsoncallback=1&tags=${tags}&page=2&per_page=8`,
+    searchImage: builder.query<IResponse, { tags: string; page: number }>({
+      query: (data) =>
+        `/?method=flickr.photos.search&api_key=${API_KEY}&format=json&nojsoncallback=1&tags=${data.tags}&page=${data.page}&per_page=8`,
       providesTags: ["Image"],
     }),
     imageExif: builder.query<IExifResponse, string>({
