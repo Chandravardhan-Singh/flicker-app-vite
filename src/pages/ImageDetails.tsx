@@ -3,23 +3,10 @@ import { useParams } from "react-router-dom";
 import {
   useImageExifQuery,
   useImageInfoQuery,
-  usePhotoContextsQuery,
   usePopularPhotosQuery,
-  useUserInfoQuery,
 } from "../redux/api/products/flickerAPI";
 import { ScreenContainer } from "../layouts";
-import {
-  Box,
-  Card,
-  CardMedia,
-  CircularProgress,
-  Fade,
-  Grid,
-  Modal,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
+import { Card, Fade, Grid, Modal, Typography } from "@mui/material";
 import ImageCard from "../components/ImageCard/Imagecard";
 import CameraIcon from "@mui/icons-material/Camera";
 import IsoIcon from "@mui/icons-material/Iso";
@@ -28,7 +15,6 @@ import { ImageInfo, Loader } from "../components";
 import { IExifInfoProps } from "../redux/api/products/types";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { TabArea } from "../components/TabArea";
-import { IMAGE_URL } from "../utils";
 
 const ImageDetails: FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -42,10 +28,10 @@ const ImageDetails: FC = () => {
     id ?? ""
   );
   const { data: popularPhotos } = usePopularPhotosQuery(
-    imageInfo?.photo.owner.nsid ?? "",
+    imageInfo?.photo?.owner.nsid ?? "",
     {
       refetchOnMountOrArgChange: true,
-      skip: true,
+      skip: false,
     }
   );
 
@@ -53,10 +39,9 @@ const ImageDetails: FC = () => {
     const tagItem: IExifInfoProps = exifData?.photo?.exif?.find(
       (tagItem) => tagItem?.tag === tag
     );
-    console.log("-->", tagItem, exifData);
-
     return tagItem;
   };
+
   const apertureInfo = useMemo(() => getTagInfo("FNumber"), [exifData, id]);
   const isoInfo = useMemo(() => getTagInfo("ISO"), [exifData, id]);
   const shutterInfo = useMemo(() => getTagInfo("ExposureTime"), [exifData, id]);
@@ -72,10 +57,10 @@ const ImageDetails: FC = () => {
     farm: imageInfo?.photo?.farm ?? 0,
     id: imageInfo?.photo?.id ?? "",
     isfamily: imageInfo?.photo.visibility.isfamily ?? 0,
-    owner: imageInfo?.photo.owner,
-    secret: imageInfo?.photo.secret ?? "",
-    server: imageInfo?.photo.server ?? "",
-    title: imageInfo?.photo.title._content ?? "",
+    owner: imageInfo?.photo?.owner,
+    secret: imageInfo?.photo?.secret ?? "",
+    server: imageInfo?.photo?.server ?? "",
+    title: imageInfo?.photo?.title._content ?? "",
   };
 
   const renderPopularTab = () => {
@@ -95,7 +80,9 @@ const ImageDetails: FC = () => {
       </>
     );
   };
-
+  if (exifError) {
+    return "Error";
+  }
   return (
     <ScreenContainer>
       <Modal
@@ -132,7 +119,7 @@ const ImageDetails: FC = () => {
                 elevation={10}
               >
                 <Typography variant="h5" component={"h5"}>
-                  {imageInfo?.photo.owner.realname}
+                  {imageInfo?.photo?.owner.realname}
                 </Typography>
                 <Typography variant="h5" component={"h5"}>
                   {datetimeInfo?.raw?._content}
