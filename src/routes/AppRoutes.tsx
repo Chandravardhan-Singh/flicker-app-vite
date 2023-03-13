@@ -10,6 +10,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import LazyLoaded from "./LazyLoader";
 import { Login, Home, Search } from "../pages";
 import PublicRoutes from "./PublicRoutes";
+import { Signup } from "../pages/auth/Signup";
 
 const About = lazy(() => import("../pages/About"));
 const Post = lazy(() => import("../pages/Post"));
@@ -18,8 +19,9 @@ const ImageDetails = lazy(() => import("../pages/ImageDetails"));
 const appRouter = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path={RoutePaths.Login} element={<PublicRoutes />}>
-        <Route index element={<Login />} />
+      <Route path={RoutePaths.Root} element={<PublicRoutes />}>
+        <Route path={RoutePaths.Login} element={<Login />} />
+        <Route path={RoutePaths.Signup} element={<Signup />} />
       </Route>
       <Route caseSensitive path={RoutePaths.Root} element={<ProtectedRoutes />}>
         <Route index element={<Home />} />
