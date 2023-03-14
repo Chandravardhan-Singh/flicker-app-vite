@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 // import "./style.css";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
-import { createPost, loadPost } from "../redux/feature/products/postSlice";
+import { loadPost } from "../redux/feature/products/postSlice";
 import { Button, InputField, PostItem } from "../components";
+import { Grid } from "@mui/material";
 type Props = {};
 
 export default (props: Props) => {
@@ -14,35 +15,30 @@ export default (props: Props) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.preventDefault();
-    // dispatch(loadPost());
-    if (!!post) {
-      dispatch(
-        createPost({
-          post,
-        })
-      );
-      setPost("");
-    }
+    dispatch(loadPost());
   };
   return (
-    <div className="content-container">
-      <div className="col-4">
-        <form>
-          <InputField
-            type="text"
-            label="Write Post"
-            placeholder="What's on your mind"
-            onChange={(e) => setPost(e.target.value)}
-            value={post}
-          />
-          <Button onClick={onPostSubmitPressed} title="Generate" />
-        </form>
-      </div>
-      <div className="col-8">
-        {posts.map((item) => {
-          return <PostItem post={item.post} />;
+    <div>
+      <form>
+        <InputField
+          type="text"
+          label="Write Post"
+          placeholder="What's on your mind"
+          onChange={(e) => setPost(e.target.value)}
+          value={post}
+        />
+        <Button onClick={onPostSubmitPressed} title="Generate" />
+      </form>
+
+      <Grid container spacing={2}>
+        {posts?.map((post) => {
+          return (
+            <Grid item lg={2}>
+              <PostItem post={post} />
+            </Grid>
+          );
         })}
-      </div>
+      </Grid>
     </div>
   );
 };
